@@ -3,14 +3,13 @@ language: php
 os: linux
 dist: xenial
 
-php:
-    - '7.4'
-    - '8.0'
+#php:
+#    - '7.4'
+#    - '8.0'
 
 branches:
     only:
         - master
-        - develop
 
 env:
     global:

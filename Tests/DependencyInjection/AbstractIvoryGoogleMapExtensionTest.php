@@ -29,9 +29,10 @@ use Ivory\GoogleMap\Service\TimeZone\TimeZoneService;
 use Ivory\GoogleMapBundle\DependencyInjection\IvoryGoogleMapExtension;
 use Ivory\GoogleMapBundle\IvoryGoogleMapBundle;
 use Ivory\Serializer\SerializerInterface;
+use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -54,17 +55,17 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
     private $locale;
 
     /**
-     * @var HttpClient|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpClient|PHPUnit_Framework_MockObject_MockObject
      */
     private $client;
 
     /**
-     * @var MessageFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var MessageFactory|PHPUnit_Framework_MockObject_MockObject
      */
     private $messageFactory;
 
     /**
-     * @var SerializerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var SerializerInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private $serializer;
 
@@ -86,8 +87,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
     }
 
     /**
-     * @param ContainerBuilder $container
-     * @param string           $configuration
+     * @param string $configuration
      */
     abstract protected function loadConfiguration(ContainerBuilder $container, $configuration);
 
@@ -942,7 +942,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClient
+     * @return PHPUnit_Framework_MockObject_MockObject|HttpClient
      */
     private function createClientMock()
     {
@@ -950,7 +950,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessageFactory
+     * @return PHPUnit_Framework_MockObject_MockObject|MessageFactory
      */
     private function createMessageFactoryMock()
     {
@@ -958,7 +958,7 @@ abstract class AbstractIvoryGoogleMapExtensionTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SerializerInterface
+     * @return PHPUnit_Framework_MockObject_MockObject|SerializerInterface
      */
     private function createSerializerMock()
     {

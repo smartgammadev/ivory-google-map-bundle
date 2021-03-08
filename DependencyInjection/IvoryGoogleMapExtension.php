@@ -11,6 +11,7 @@
 
 namespace Ivory\GoogleMapBundle\DependencyInjection;
 
+use Exception;
 use Ivory\GoogleMap\Service\BusinessAccount;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -53,8 +54,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
     }
 
     /**
-     * @param mixed[]          $config
-     * @param ContainerBuilder $container
+     * @param mixed[] $config
      */
     private function loadMapConfig(array $config, ContainerBuilder $container)
     {
@@ -76,8 +76,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
     }
 
     /**
-     * @param mixed[]          $config
-     * @param ContainerBuilder $container
+     * @param mixed[] $config
      */
     private function loadStaticMapConfig(array $config, ContainerBuilder $container)
     {
@@ -92,16 +91,14 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
 
             $container
                 ->getDefinition('ivory.google_map.helper.map.static')
-                ->addArgument(isset($businessAccount['secret']) ? $businessAccount['secret'] : null)
-                ->addArgument(isset($businessAccount['client_id']) ? $businessAccount['client_id'] : null)
-                ->addArgument(isset($businessAccount['channel']) ? $businessAccount['channel'] : null);
+                ->addArgument($businessAccount['secret'] ?? null)
+                ->addArgument($businessAccount['client_id'] ?? null)
+                ->addArgument($businessAccount['channel'] ?? null);
         }
     }
 
     /**
-     * @param mixed[]          $config
-     * @param ContainerBuilder $container
-     * @param LoaderInterface  $loader
+     * @param mixed[] $config
      */
     private function loadServicesConfig(array $config, ContainerBuilder $container, LoaderInterface $loader)
     {
@@ -125,14 +122,14 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
     }
 
     /**
-     * @param string           $service
-     * @param mixed[]          $config
-     * @param ContainerBuilder $container
-     * @param LoaderInterface  $loader
-     * @param bool             $http
+     * @param string  $service
+     * @param mixed[] $config
+     * @param bool    $http
+     *
+     * @throws Exception
      */
     private function loadServiceConfig(
-        $service,
+        string $service,
         array $config,
         ContainerBuilder $container,
         LoaderInterface $loader,
@@ -166,7 +163,7 @@ class IvoryGoogleMapExtension extends ConfigurableExtension
                 new Definition(BusinessAccount::class, [
                     $businessAccountConfig['client_id'],
                     $businessAccountConfig['secret'],
-                    isset($businessAccountConfig['channel']) ? $businessAccountConfig['channel'] : null,
+                    $businessAccountConfig['channel'] ?? null,
                 ])
             );
 

@@ -1,0 +1,91 @@
+name: Build
+
+on:
+  push: ~
+  pull_request: ~
+  release:
+    types:
+      - created
+  schedule:
+    - cron: '0 1 * * 6'
+  workflow_dispatch: ~
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        versions:
+          - php: 7.3
+            symfony: 4.4
+            coverage: xdebug
+          - php: 7.4
+            symfony: 4.4
+            coverage: xdebug
+          - php: 7.3
+            symfony: ^5.3
+            coverage: xdebug
+          - php: 7.4
+            symfony: ^5.3
+            coverage: xdebug
+          - php: 8.0
+            symfony: ^5.3
+            coverage: none
+
+    name: "PHP ${{ matrix.versions.php }}, Symfony ${{ matrix.versions.symfony }}"
+
+    env:
+      APP_ENV: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "${{ matrix.versions.php }}"
+          extensions: intl, xdebug
+          tools: symfony
+          coverage: "${{ matrix.versions.coverage }}"
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache Composer
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php-${{ matrix.versions.php }}-symfony-${{ matrix.versions.symfony }}-composer-${{ hashFiles('**/composer.json **/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.versions.php }}-symfony-${{ matrix.versions.symfony }}-composer
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-source
+
+      - name: Run analysis
+        run: composer validate --strict
+
+      - name: Install Symfony v${{ matrix.versions.symfony }}
+        run: |
+          composer remove --dev friendsofphp/php-cs-fixer
+          composer require --with-all-dependencies symfony/framework-bundle:${{ matrix.versions.symfony }}
+          composer require --dev --with-all-dependencies symfony/form:${{ matrix.versions.symfony }}
+          composer require --dev --with-all-dependencies symfony/templating:${{ matrix.versions.symfony }}
+          composer require --dev --with-all-dependencies symfony/yaml:${{ matrix.versions.symfony }}
+
+      - name: Run PHPUnit with coverage
+        if: ${{ matrix.versions.coverage == 'xdebug' }}
+        run: vendor/bin/phpunit --configuration phpunit.ci.xml --coverage-clover clover.xml
+
+      - name: Run PHPUnit without coverage
+        if: ${{ matrix.versions.coverage != 'xdebug' }}
+        run: vendor/bin/phpunit --configuration phpunit.ci.xml
+
+      - name: Send coverage report
+        if: ${{ matrix.versions.coverage == 'xdebug' }}
+        run: |
+          wget https://scrutinizer-ci.com/ocular.phar
+          php ocular.phar code-coverage:upload --format=php-clover clover.xml

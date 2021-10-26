@@ -1,16 +1,23 @@
+build:
+  nodes:
+    analysis:
+      tests:
+        override:
+          - php-scrutinizer-run
+
 filter:
-    excluded_paths:
-        - vendor/*
-        - Tests/*
+  excluded_paths:
+    - vendor/*
+    - tests/*
 
 checks:
-    php:
-        code_rating: true
-        duplication: true
-        excluded_dependencies:
-            - friendsofphp/php-cs-fixer
+  php:
+    code_rating: true
+    duplication: true
+    excluded_dependencies:
+      - friendsofphp/php-cs-fixer
 
 tools:
-    external_code_coverage:
-        timeout: 3600
-        runs: 1
+  external_code_coverage:
+    timeout: 3600
+    runs: 1

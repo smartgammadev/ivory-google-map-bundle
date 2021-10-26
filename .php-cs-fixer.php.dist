@@ -1,0 +1,42 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the Ivory Google Map package.
+ *
+ * (c) Samuel Breu <samuel.breu@bresam.ch>
+ *
+ * For the full copyright and license information, please read the LICENSE
+ * file that was distributed with this source code.
+ */
+
+$finder = PhpCsFixer\Finder::create()
+    ->in([
+        __DIR__.'/src/DependencyInjection',
+        __DIR__.'/src/Form',
+        __DIR__.'/src/Templating',
+        __DIR__.'/src/Twig',
+        __DIR__.'/tests',
+    ]);
+
+$config = new PhpCsFixer\Config();
+
+return $config
+    ->setRules([
+        '@Symfony' => true,
+        '@PSR12' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'ordered_imports' => true,
+        'phpdoc_single_line_var_spacing' => true,
+//        'declare_strict_types' => true,
+        'phpdoc_no_useless_inheritdoc' => true,
+        'phpdoc_var_annotation_correct_order' => true,
+        'no_superfluous_phpdoc_tags' => true,
+        'phpdoc_line_span' => [
+            'const' => 'single',
+            'property' => 'single',
+            'method' => 'single',
+        ],
+    ])
+    ->setFinder($finder);

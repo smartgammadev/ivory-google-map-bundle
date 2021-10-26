@@ -6,8 +6,11 @@
 /.env
 
 # PHP CS Fixer
-/.php_cs.cache
+.php-cs-fixer.cache
+.php-cs-fixer.php
 
 # PHPUnit
 /build
 /phpunit.xml
+/Tests/.cache
+.phpunit.result.cache

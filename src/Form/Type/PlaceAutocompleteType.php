@@ -1,0 +1,116 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the Ivory Google Map bundle package.
+ *
+ * (c) Eric GELOEN <geloen.eric@gmail.com>
+ *
+ * For the full copyright and license information, please read the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Ivory\GoogleMapBundle\Form\Type;
+
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Place\Autocomplete;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class PlaceAutocompleteType extends AbstractType
+{
+    /** {@inheritdoc} */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $autocomplete = new Autocomplete();
+
+        if (null !== $options['variable']) {
+            $autocomplete->setVariable($options['variable']);
+        }
+
+        if (!empty($options['components'])) {
+            $autocomplete->setComponents($options['components']);
+        }
+
+        if (null !== $options['bound']) {
+            $autocomplete->setBound($options['bound']);
+        }
+
+        $autocomplete->getEventManager()->setDomEvents($options['dom_events']);
+        $autocomplete->getEventManager()->setDomEventsOnce($options['dom_events_once']);
+        $autocomplete->getEventManager()->setEvents($options['events']);
+        $autocomplete->getEventManager()->setEventsOnce($options['events_once']);
+
+        if (!empty($options['types'])) {
+            $autocomplete->setTypes($options['types']);
+        }
+
+        if (!empty($options['libraries'])) {
+            $autocomplete->setLibraries($options['libraries']);
+        }
+
+        $builder->setAttribute('autocomplete', $autocomplete);
+    }
+
+    /** {@inheritdoc} */
+    public function finishView(FormView $view, FormInterface $form, array $options): void
+    {
+        $autocomplete = $form->getConfig()->getAttribute('autocomplete');
+        $autocomplete->setInputId($view->vars['id']);
+        $autocomplete->setValue(!empty($view->vars['value']) ? $view->vars['value'] : null);
+        $autocomplete->setInputAttribute('name', $view->vars['full_name']);
+
+        $view->vars['api'] = $options['api'];
+        $view->vars['autocomplete'] = $autocomplete;
+    }
+
+    /** {@inheritdoc} */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver
+            ->setDefaults([
+                'variable' => null,
+                'components' => [],
+                'bound' => null,
+                'dom_events' => [],
+                'dom_events_once' => [],
+                'events' => [],
+                'events_once' => [],
+                'types' => [],
+                'libraries' => [],
+                'api' => true,
+            ])
+            ->addAllowedTypes('variable', ['string', 'null'])
+            ->addAllowedTypes('bound', [Bound::class, 'null'])
+            ->addAllowedTypes('components', 'array')
+            ->addAllowedTypes('dom_events', 'array')
+            ->addAllowedTypes('dom_events_once', 'array')
+            ->addAllowedTypes('events', 'array')
+            ->addAllowedTypes('events_once', 'array')
+            ->addAllowedTypes('types', 'array')
+            ->addAllowedTypes('libraries', 'array')
+            ->addAllowedTypes('api', 'bool');
+    }
+
+    /** {@inheritdoc} */
+    public function getParent(): ?string
+    {
+        return method_exists(AbstractType::class, 'getBlockPrefix') ? TextType::class : 'text';
+    }
+
+    /** {@inheritdoc} */
+    public function getBlockPrefix(): string
+    {
+        return 'place_autocomplete';
+    }
+
+    public function getName(): string
+    {
+        return $this->getBlockPrefix();
+    }
+}

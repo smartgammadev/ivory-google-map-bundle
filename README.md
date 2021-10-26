@@ -1,40 +1,50 @@
 # README
 
-[![Travis Build Status](https://api.travis-ci.com/bresam/ivory-google-map-bundle.svg?branch=master)](https://travis-ci.com/github/bresam/ivory-google-map-bundle)
+![Build status](https://github.com/bresam/ivory-google-map-bundle/actions/workflows/build.yml/badge.svg)
+
 [![Code Coverage](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bresam/ivory-google-map-bundle/?branch=master)
+
+[![Latest Stable Version](http://poser.pugx.org/ivory/google-map-bundle/v)](https://packagist.org/packages/ivory/google-map-bundle)
+[![License](http://poser.pugx.org/ivory/google-map-bundle/license)](https://packagist.org/packages/ivory/google-map-bundle)
+[![PHP Version Require](http://poser.pugx.org/ivory/google-map-bundle/require/php)](https://packagist.org/packages/ivory/google-map-bundle)
+
+[![Total Downloads](http://poser.pugx.org/ivory/google-map-bundle/downloads)](https://packagist.org/packages/ivory/google-map)
+[![Monthly Downloads](http://poser.pugx.org/ivory/google-map-bundle/d/monthly)](https://packagist.org/packages/ivory/google-map)
+[![Daily Downloads](http://poser.pugx.org/ivory/google-map-bundle/d/daily)](https://packagist.org/packages/ivory/google-map)
+
+
 
 The bundle provides an integration of the [Ivory Google Map](https://github.com/bresam/ivory-google-map) library for
 your Symfony project.
 
 ## Documentation
 
- - [Installation](/Resources/doc/installation.md)
- - [Usage](/Resources/doc/usage.md)
-    - [Map](/Resources/doc/map.md)
-    - [Static Map](/Resources/doc/static_map.md)
-    - [Place Autocomplete](/Resources/doc/place_autocomplete.md)
-    - [Services](/Resources/doc/service/index.md)
-        - [Direction](/Resources/doc/service/direction.md)
-        - [Distance Matrix](/Resources/doc/service/distance_matrix.md)
-        - [Geocoder](/Resources/doc/service/geocoder.md)
-        - [Place](/Resources/doc/service/place/index.md)
-            - [Autocomplete](/Resources/doc/service/place/autocomplete.md)
-            - [Detail](/Resources/doc/service/place/detail.md)
-            - [Photo](/Resources/doc/service/place/photo.md)
-            - [Search](/Resources/doc/service/place/search.md)
-        - [Time Zone](/Resources/doc/service/time_zone.md)
- - [Development Environment](/Resources/doc/development_environment.md)
+ - [Installation](/docs/installation.md)
+ - [Usage](/docs/usage.md)
+    - [Map](/docs/map.md)
+    - [Static Map](/docs/static_map.md)
+    - [Place Autocomplete](/docs/place_autocomplete.md)
+    - [Services](/docs/service/index.md)
+        - [Direction](/docs/service/direction.md)
+        - [Distance Matrix](/docs/service/distance_matrix.md)
+        - [Geocoder](/docs/service/geocoder.md)
+        - [Place](/docs/service/place/index.md)
+            - [Autocomplete](/docs/service/place/autocomplete.md)
+            - [Detail](/docs/service/place/detail.md)
+            - [Photo](/docs/service/place/photo.md)
+            - [Search](/docs/service/place/search.md)
+        - [Time Zone](/docs/service/time_zone.md)
+ - [Development Environment](/docs/development_environment.md)
 
 ## Testing
 
-The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code coverage close to **100%**. To
-execute the test suite, check the travis [configuration](/.travis.yml).
+The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/).
 
 ## Contribute
 
 We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR! You
-can follow the [CONTRIBUTING](/CONTRIBUTING.md) file which will explain you how to set up the project.
+can follow the [CONTRIBUTING](https://github.com/bresam/ivory-google-map-bundle/blob/master/.github/CONTRIBUTING.md) file which will explain you how to set up the project.
 
 ## License
 

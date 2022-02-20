@@ -12,11 +12,13 @@
 namespace Ivory\GoogleMapBundle\Twig;
 
 use Ivory\GoogleMap\Helper\ApiHelper;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ApiExtension extends \Twig_Extension
+class ApiExtension extends AbstractExtension
 {
     /**
      * @var ApiHelper
@@ -39,7 +41,7 @@ class ApiExtension extends \Twig_Extension
         $functions = [];
 
         foreach ($this->getMapping() as $name => $method) {
-            $functions[] = new \Twig_SimpleFunction($name, [$this, $method], ['is_safe' => ['html']]);
+            $functions[] = new TwigFunction($name, [$this, $method], ['is_safe' => ['html']]);
         }
 
         return $functions;

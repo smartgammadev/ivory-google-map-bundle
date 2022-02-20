@@ -13,11 +13,13 @@ namespace Ivory\GoogleMapBundle\Twig;
 
 use Ivory\GoogleMap\Helper\StaticMapHelper;
 use Ivory\GoogleMap\Map;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class StaticMapExtension extends \Twig_Extension
+class StaticMapExtension extends AbstractExtension
 {
     /**
      * @var StaticMapHelper
@@ -40,7 +42,7 @@ class StaticMapExtension extends \Twig_Extension
         $functions = [];
 
         foreach ($this->getMapping() as $name => $method) {
-            $functions[] = new \Twig_SimpleFunction($name, [$this, $method], ['is_safe' => ['html']]);
+            $functions[] = new TwigFunction($name, [$this, $method], ['is_safe' => ['html']]);
         }
 
         return $functions;

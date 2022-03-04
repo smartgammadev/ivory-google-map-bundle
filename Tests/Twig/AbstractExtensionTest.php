@@ -12,6 +12,9 @@
 namespace Ivory\GoogleMapBundle\Tests\Twig;
 
 use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -19,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 abstract class AbstractExtensionTest extends TestCase
 {
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $twig;
 
@@ -28,17 +31,17 @@ abstract class AbstractExtensionTest extends TestCase
      */
     protected function setUp()
     {
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem([]));
+        $this->twig = new Environment(new FilesystemLoader([]));
         $this->twig->addExtension($this->createExtension());
     }
 
     /**
-     * @return \Twig_Extension
+     * @return AbstractExtension
      */
     abstract protected function createExtension();
 
     /**
-     * @return \Twig_Environment
+     * @return Environment
      */
     protected function getTwig()
     {
